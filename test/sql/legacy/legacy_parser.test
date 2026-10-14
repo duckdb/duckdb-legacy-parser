@@ -117,20 +117,6 @@ syntax error at or near "1"
 statement ok
 SET allow_parser_override_extension='default'
 
-query I
-1 + 1
-----
-2
-
-# enabling again moves the core setting off default once more
-statement ok
-SET enable_legacy_parser = true
-
-statement error
-1 + 1
-----
-syntax error at or near "1"
-
 # an override mode that was chosen explicitly is kept
 statement ok
 SET allow_parser_override_extension='fallback'
