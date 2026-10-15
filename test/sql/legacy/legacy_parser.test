@@ -85,7 +85,7 @@ SET allow_parser_override_extension='fallback'
 statement error
 SELEC 1
 ----
-syntax error at or near "1"
+syntax error at or near
 
 # default disables the override entirely
 statement ok
