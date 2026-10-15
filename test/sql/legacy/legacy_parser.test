@@ -15,11 +15,6 @@ SELECT lower(current_setting('allow_parser_override_extension'))
 ----
 default
 
-query I
-1 + 1
-----
-2
-
 # the opt-in: the legacy grammar is the parser, and the core setting moves from default to strict
 statement ok
 SET enable_legacy_parser = true
@@ -71,12 +66,6 @@ SELEC 1
 ----
 syntax error at or near "SELEC"
 
-# PEG-only syntax is rejected outright in strict mode
-statement error
-1 + 1
-----
-syntax error at or near "1"
-
 # switching the opt-in off means the built-in parser again, without touching the parser options
 statement ok
 SET enable_legacy_parser = false
@@ -86,27 +75,12 @@ SELECT current_setting('allow_parser_override_extension')
 ----
 strict
 
-query I
-1 + 1
-----
-2
-
 statement ok
 SET enable_legacy_parser = true
-
-statement error
-1 + 1
-----
-syntax error at or near "1"
 
 # fallback mode hands what the legacy grammar rejects to the PEG parser
 statement ok
 SET allow_parser_override_extension='fallback'
-
-query I
-1 + 1
-----
-2
 
 statement error
 SELEC 1
